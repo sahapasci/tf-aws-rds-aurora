@@ -19,6 +19,11 @@ variable "identifier_prefix" {
   default     = ""
 }
 
+variable "security_group_name_prefix" {
+  description = "Prefix for security group name"
+  default     = "aurora-"
+}
+
 variable "replica_count" {
   description = "Number of reader nodes to create.  If `replica_scale_enable` is `true`, the value of `replica_scale_min` is used instead."
   default     = 1
@@ -32,11 +37,6 @@ variable "allowed_security_groups" {
 variable "vpc_id" {
   description = "VPC ID"
   type        = "string"
-}
-
-variable "availability_zones" {
-  description = "Availability zones for the cluster. Must 3 or less"
-  default     = []
 }
 
 variable "instance_type" {
@@ -61,12 +61,12 @@ variable "password" {
 
 variable "final_snapshot_identifier_prefix" {
   description = "The prefix name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too."
-  default     = "final"
+  default     = "final-"
 }
 
 variable "skip_final_snapshot" {
   description = "Should a final snapshot be created on cluster destroy"
-  default     = "false"
+  default     = false
 }
 
 variable "backup_retention_period" {
@@ -91,7 +91,7 @@ variable "port" {
 
 variable "apply_immediately" {
   description = "Determines whether or not any DB modifications are applied immediately, or during the maintenance window"
-  default     = "false"
+  default     = false
 }
 
 variable "monitoring_interval" {
@@ -101,7 +101,7 @@ variable "monitoring_interval" {
 
 variable "auto_minor_version_upgrade" {
   description = "Determines whether minor engine upgrades will be performed automatically in the maintenance window"
-  default     = "true"
+  default     = true
 }
 
 variable "db_parameter_group_name" {
@@ -219,7 +219,7 @@ variable "tags" {
 
 variable "performance_insights_enabled" {
   type        = "string"
-  default     = "false"
+  default     = false
   description = "Specifies whether Performance Insights is enabled or not."
 }
 

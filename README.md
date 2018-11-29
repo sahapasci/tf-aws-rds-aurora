@@ -63,7 +63,6 @@ terraform-docs md ./ | cat -s | tail -r | tail -n +2 | tail -r >> README.md
 | allowed_security_groups | A list of Security Group ID's to allow access to. | string | `<list>` | no |
 | apply_immediately | Determines whether or not any DB modifications are applied immediately, or during the maintenance window | string | `false` | no |
 | auto_minor_version_upgrade | Determines whether minor engine upgrades will be performed automatically in the maintenance window | string | `true` | no |
-| availability_zones | Availability zones for the cluster. Must 3 or less | string | `<list>` | no |
 | backup_retention_period | How long to keep backups for (in days) | string | `7` | no |
 | cloudwatch_alarm_actions | Actions for cloudwatch alarms. e.g. an SNS topic | list | `<list>` | no |
 | cloudwatch_alarm_default_thresholds | Override default thresholds for CloudWatch alarms. See cloudwatch_alarm_default_thresholds in cloudwatch.tf for valid keys | map | `<map>` | no |
@@ -73,7 +72,7 @@ terraform-docs md ./ | cat -s | tail -r | tail -n +2 | tail -r >> README.md
 | db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.6` | no |
 | engine | Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql | string | `aurora` | no |
 | engine_version | Aurora database engine version. | string | `5.6.10a` | no |
-| final_snapshot_identifier_prefix | The prefix name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too. | string | `final` | no |
+| final_snapshot_identifier_prefix | The prefix name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too. | string | `final-` | no |
 | identifier_prefix | Prefix for cluster and instance identifier | string | `` | no |
 | instance_type | Instance type to use | string | `db.r4.large` | no |
 | kms_key_id | The ARN for the KMS encryption key if one is set to the cluster. | string | `` | no |
@@ -96,6 +95,7 @@ terraform-docs md ./ | cat -s | tail -r | tail -n +2 | tail -r >> README.md
 | route53_record_appendix | Will be appended to the route53 record. Only used if route53_zone_id is passed also | string | `.rds` | no |
 | route53_record_ttl | TTL of route53 record. Only used if route53_zone_id is passed also | string | `60` | no |
 | route53_zone_id | If specified a route53 record will be created | string | `` | no |
+| security_group_name_prefix | Prefix for security group name | string | `aurora-` | no |
 | skip_final_snapshot | Should a final snapshot be created on cluster destroy | string | `false` | no |
 | snapshot_identifier | DB snapshot to create this database from | string | `` | no |
 | storage_encrypted | Specifies whether the underlying storage layer should be encrypted | string | `false` | no |
