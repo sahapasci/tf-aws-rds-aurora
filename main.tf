@@ -3,6 +3,7 @@ locals {
   master_password            = "${var.password == "" ? random_id.master_password.b64 : var.password}"
   create_enhanced_monitoring = "${var.create_resources && var.monitoring_interval > 0 ? 1 : 0}"
   cluster_instance_count     = "${var.create_resources ? var.replica_autoscaling ? var.replica_scale_min : var.replica_count : 0}"
+  security_group_name        = "${var.security_group_name_prefix  == "" ? var.name : "${var.security_group_name_prefix}${var.name}"}"
 }
 
 # Random string to use as master password unless one is specified
@@ -15,12 +16,13 @@ resource "aws_db_subnet_group" "main" {
   name        = "${var.name}"
   description = "For Aurora cluster ${var.name}"
   subnet_ids  = ["${var.subnet_ids}"]
-  tags        = "${merge(var.tags, map("Name", "aurora-${var.name}"))}"
+  tags        = "${merge(var.tags, map("Name", "${var.name}"))}"
 }
 
 resource "aws_rds_cluster" "main" {
   count                           = "${var.create_resources}"
   cluster_identifier              = "${var.identifier_prefix}${var.name}"
+  availability_zones              = ["${var.availability_zones}"]
   engine                          = "${var.engine}"
   engine_version                  = "${var.engine_version}"
   kms_key_id                      = "${var.kms_key_id}"
@@ -126,10 +128,10 @@ resource "aws_appautoscaling_policy" "autoscaling_read_replica_count" {
 
 resource "aws_security_group" "main" {
   count       = "${var.create_resources}"
-  name        = "${var.security_group_name_prefix}${var.name}"
+  name        = "${local.security_group_name}"
   description = "For Aurora cluster ${var.name}"
   vpc_id      = "${var.vpc_id}"
-  tags        = "${merge(var.tags, map("Name", "aurora-${var.name}"))}"
+  tags        = "${merge(var.tags, map("Name", "${local.security_group_name}"))}"
 
   lifecycle = {
     create_before_destroy = true

@@ -21,7 +21,7 @@ variable "identifier_prefix" {
 
 variable "security_group_name_prefix" {
   description = "Prefix for security group name"
-  default     = "aurora-"
+  default     = ""
 }
 
 variable "replica_count" {
@@ -37,6 +37,11 @@ variable "allowed_security_groups" {
 variable "vpc_id" {
   description = "VPC ID"
   type        = "string"
+}
+
+variable "availability_zones" {
+  description = "Availability zones for the cluster. Must 3 or less"
+  default     = []
 }
 
 variable "instance_type" {
