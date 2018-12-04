@@ -26,7 +26,7 @@ module "db" {
   engine_version                  = "9.6.3"
   vpc_id                          = "vpc-12345678"
   subnet_ids                      = ["subnet-12345678", "subnet-87654321"]
-  azs                             = ["eu-west-1a", "eu-west-1b"]
+  availability_zones              = ["eu-west-1a", "eu-west-1b"]
   replica_count                   = 1
   allowed_security_groups         = ["sg-12345678"]
   instance_type                   = "db.r4.large"
@@ -95,7 +95,7 @@ terraform-docs md ./ | cat -s | tail -r | tail -n +2 | tail -r >> README.md
 | route53_record_appendix | Will be appended to the route53 record. Only used if route53_zone_id is passed also | string | `.rds` | no |
 | route53_record_ttl | TTL of route53 record. Only used if route53_zone_id is passed also | string | `60` | no |
 | route53_zone_id | If specified a route53 record will be created | string | `` | no |
-| security_group_name_prefix | Prefix for security group name | string | `aurora-` | no |
+| security_group_name_prefix | Prefix for security group name | string | `` | no |
 | skip_final_snapshot | Should a final snapshot be created on cluster destroy | string | `false` | no |
 | snapshot_identifier | DB snapshot to create this database from | string | `` | no |
 | storage_encrypted | Specifies whether the underlying storage layer should be encrypted | string | `false` | no |
